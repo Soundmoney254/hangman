@@ -16,30 +16,25 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository
 
 ```
-git clone https://github.com/soundmoney254/hangman.git
-
+git clone git@github.com:Soundmoney254/hangman.git
 ```
 
 2. Navigate into the cloned repository
 
 ```
 cd hangman
-
 ```
 
-3. Install the required packages
+3. Install Django
 
 ```
-pip install -r requirements.txt
-
+pip install Django
 ```
 
 4. Run the server
 
 ```
-
 python manage.py runserver
-
 ```
 
 You can now access the server on the endpoint
