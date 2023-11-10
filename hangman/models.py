@@ -32,7 +32,7 @@ class Game(models.Model):
         Returns:
             int: The remaining guesses.
         """
-        return math.ceil(len(self.word) / 2) - self.incorrect_guesses
+        return self.max_incorrect_guesses - self.incorrect_guesses
 
     #Returns true if the game is won
     def won(self):
@@ -44,6 +44,7 @@ class Game(models.Model):
         """
         return "_" not in self.guessed_word
 
+
     #Returns true if the game is lost
     def lost(self):
         """
@@ -53,6 +54,7 @@ class Game(models.Model):
             bool: True if the remaining guesses are 0 or less, False otherwise.
         """
         return self.remaining_guesses() <= 0
+
 
     #Returns true if the game is over (won or lost)
     def guess(self, letter):
@@ -75,6 +77,7 @@ class Game(models.Model):
         else:
             self.incorrect_guesses += 1
 
+
     #Initializes the game
     def save(self, *args, **kwargs):
             """
@@ -90,4 +93,5 @@ class Game(models.Model):
                 self.guessed_word = "_" * len(self.word)
                 self.set_guesses([])
                 self.state = 'InProgress'
+                self.max_incorrect_guesses = math.ceil(len(self.word) / 2)
             super().save(*args, **kwargs)
