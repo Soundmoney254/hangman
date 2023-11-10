@@ -64,18 +64,22 @@ def guess(request, game_id):
         data = json.loads(request.body)
         guessed_letter = str(data.get('guess'))
 
+        #check if game is still in progress
         if game.state in ['Won', 'Lost']:
             return JsonResponse({"message": f"Game {game.state}. No more guesses are accepted."}, status=422)
 
+        #check if guessed_letter is valid
         if not guessed_letter or len(guessed_letter) != 1 or not guessed_letter.isalpha():
             return JsonResponse({"message": "Invalid guess. Please enter a single letter."}, status=422)
 
         guessed_letter = guessed_letter.upper()
         result = game.guess(guessed_letter)
 
+        #check if guessed letter has already been guessed
         if isinstance(result, str):
             return JsonResponse({"message": result}, status=422)
 
+        #check if game is won or lost and update game state
         if game.won():
             game.state = 'Won'
         elif game.lost():
